@@ -16,6 +16,7 @@ wget -q https://www.python.org/ftp/python/3.8.9/Python-3.8.9.tgz
 tar -xf Python-3.8.9.tgz
 
 # Navigate to Python directory
+# shellcheck disable=SC2164
 cd Python-3.8.9
 
 # Configure installation
@@ -26,4 +27,12 @@ make -j 4
 sudo make altinstall
 
 # Verify that Python 3.8 was installed correctly
-python3.8 --version
+PYTHON_VERSION=$(python3.8 --version 2>&1)
+if [[ $PYTHON_VERSION == *"Python 3.8"* ]]; then
+  echo "Python 3.8 has been installed successfully."
+else
+    echo "Python 3.8 has not been installed."
+fi
+
+# Cleaning folder
+sudo rm -r Python*
